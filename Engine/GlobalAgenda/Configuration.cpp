@@ -59,7 +59,7 @@ uint32_t GConfig::GetFunctionSpacing()
 bool GConfig::m_useWindows = true;
 
 // If you want to use objects internal integer for finding static classes and functions, note that these will change every time the game updates.
-bool GConfig::m_useConstants = false;
+bool GConfig::m_useConstants = true;
 
 // If you want to remove the "iNative" index on functions before calling process event.
 bool GConfig::m_removeNativeIndex = true;
@@ -67,7 +67,7 @@ bool GConfig::m_removeNativeIndex = true;
 // If you want to remove the "FUNC_Native" flag on functions before calling process event.
 bool GConfig::m_removeNativeFlags = true;
 
-// If you want the EFunctionFlags, EPropertyFlags, and EObjectFlags enums so be printed in the final sdk.
+// If you want the EFunctionFlags, EPropertyFlags, and EObjectFlags enums to be printed in the final sdk.
 bool GConfig::m_printEnumFlags = true;
 
 // If you want to use strongly typed enum classes over normal ones.
@@ -87,7 +87,7 @@ std::vector<std::string> GConfig::m_blacklistedTypes = { "FPointer", "FQWord", "
 
 // Names of classes or structs you want to override with your own custom one.
 std::map<std::string, std::string> GConfig::m_typeOverrides = {
-    //{ "FExampleStruct", PiecesOfTypes::Example_Struct }
+    { "FExampleStruct", PiecesOfTypes::Example_Struct }
 };
 
 bool GConfig::UsingWindows()
@@ -171,17 +171,16 @@ std::string GConfig::GetTypeOverride(const std::string& name)
 # ========================================================================================= #
 */
 
-// If you want to use "m_peIndex" change this to true, if not virutal voids will be generated from "m_peMask" and "m_pePattern".
 bool GConfig::m_useIndex = true;
 
 // Position where the process event function is in UObject's VfTable.
-int32_t GConfig::m_peIndex = 59;
+int32_t GConfig::m_peIndex = 63;
 
-// Half byte mask, use question marks for unknown data.
-std::string GConfig::m_peMask = "xxx???x";
+// Half byte mask for ProcessEvent, derived from provided signature: 74 ?? 83 C0 07 83 E0 F8 E8 ?? ?? ?? ?? 8B C4
+std::string GConfig::m_peMask = "xx??????x????x";
 
 // First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
-std::pair<uint8_t*, std::string> GConfig::m_pePattern = { (uint8_t*)"\x10\x11\x12\x00\x00\x00\x13", "\\x10\\x11\\x12\\x00\\x00\\x00\\x13" };
+std::pair<uint8_t*, std::string> GConfig::m_pePattern = { (uint8_t*)"\x74\x00\x83\xc0\x07\x83\xe0\xf8\xe8\x00\x00\x00\x00\x8b\xc4", "\\x74\\x00\\x83\\xc0\\x07\\x83\\xe0\\xf8\\xe8\\x00\\x00\\x00\\x00\\x8b\\xc4" };
 
 bool GConfig::UsingProcessEventIndex()
 {
@@ -214,24 +213,27 @@ const std::string& GConfig::GetProcessEventStr()
 # ========================================================================================= #
 */
 
-// If want to use offsets or patterns to initialize global objects and names.
-bool GConfig::m_useOffsets = true;
+// Use offsets since GObjects and GNames offsets are provided.
+bool GConfig::m_useOffsets = false;
 
-uintptr_t GConfig::m_gobjectOffset = 0x1023630;
+uintptr_t GConfig::m_gobjectOffset = 0x13465A54;
 
-// Half byte mask, use question marks for unknown data.
-std::string GConfig::m_gobjectMask = "xxx???x";
+// Half byte mask for GObjects, from provided signature: A1 ?? ?? ?? ?? 8B ?? ?? 8B ?? ?? 25 00 02 00 00
+std::string GConfig::m_gobjectMask = "x????x??x??xxxxx";
 
-// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
-std::pair<uint8_t*, std::string> GConfig::m_gobjectPattern = { (uint8_t*)"\x10\x11\x12\x00\x00\x00\x13", "\\x10\\x11\\x12\\x00\\x00\\x00\\x13" };
+// GObjects pattern from provided signature.
+																																				   
+std::pair<uint8_t*, std::string> GConfig::m_gobjectPattern = { (uint8_t*)"\xa1\x00\x00\x00\x00\x8b\x00\x00\x8b\x00\x00\x25\x00\x02\x00\x00", "\\xa1\\x00\\x00\\x00\\x00\\x8b\\x00\\x00\\x8b\\x00\\x00\\x25\\x00\\x02\\x00\\x00" };
 
-uintptr_t GConfig::m_gnameOffset = 0x1035674;
+// GNames offset from provided data: 0x13454180.
+uintptr_t GConfig::m_gnameOffset = 0x13454180;
 
-// Half byte mask, use question marks for unknown data.
-std::string GConfig::m_gnameMask = "xxx???x";
+// Half byte mask for GNames, from provided signature: 8B 0D ?? ?? ?? ?? 83 3C 81 00 74
+std::string GConfig::m_gnameMask = "xx????xxxxx";
 
-// First value is the actual hex escaped pattern, second value is the string version of it printed in the final sdk.
-std::pair<uint8_t*, std::string> GConfig::m_gnamePattern = { (uint8_t*)"\x10\x11\x12\x00\x00\x00\x13", "\\x10\\x11\\x12\\x00\\x00\\x00\\x13" };
+// GNames pattern from provided signature.
+																																				 
+std::pair<uint8_t*, std::string> GConfig::m_gnamePattern = { (uint8_t*)"\x8b\x0d\x00\x00\x00\x00\x83\x3c\x81\x00\x74", "\\x8b\\x0d\\x00\\x00\\x00\\x00\\x83\\x3c\\x81\\x00\\x74" };
 
 bool GConfig::UsingOffsets()
 {
@@ -285,16 +287,16 @@ const std::string& GConfig::GetGNameMask()
 */
 
 // Mainly just used for the printed headers at the top of each generated file.
-std::string GConfig::m_gameNameLong = "Dishonered";
+std::string GConfig::m_gameNameLong = "Global Agenda";
 
 // This is used for the output folder name, along with the printed headers at the top of each file.
-std::string GConfig::m_gameNameShort = "DSDK";
+std::string GConfig::m_gameNameShort = "GASDK";
 
 // Optional, mainly for your own sake, like comparing sdks you generate or release to people.
-std::string GConfig::m_gameVersion = "1.0.0.0";
+std::string GConfig::m_gameVersion = "2.0.0.0";
 
 // Directory folder that your want your sdk to be generated in.
-std::filesystem::path GConfig::m_outputPath = "I_FORGOT_TO_SET_A_PATH";
+std::filesystem::path GConfig::m_outputPath = "gasdk_generated";
 
 const std::string& GConfig::GetGameNameLong()
 {
@@ -320,9 +322,3 @@ bool GConfig::HasOutputPath()
 {
     return (!GetOutputPath().string().empty() && (GetOutputPath().string() != "I_FORGOT_TO_SET_A_PATH"));
 }
-
-/*
-# ========================================================================================= #
-#
-# ========================================================================================= #
-*/

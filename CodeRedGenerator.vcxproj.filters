@@ -20,19 +20,13 @@
     <Filter Include="Engine\Dishonered">
       <UniqueIdentifier>{3beb0f8b-1c3e-44fb-9ab8-bc9c7aa9dd90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\GlobalAgenda">
+      <UniqueIdentifier>{d6a85430-54b7-48d3-b3a0-d256a9d5ab98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Engine.cpp">
       <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Template\Configuration.cpp">
-      <Filter>Engine\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Template\GameDefines.cpp">
-      <Filter>Engine\Template</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Template\PiecesOfCode.cpp">
-      <Filter>Engine\Template</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
@@ -43,31 +37,22 @@
     <ClCompile Include="Framework\Member.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Dishonered\GameDefines.cpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Dishonered\PiecesOfCode.cpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Dishonered\Configuration.cpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\Printer.cpp">
       <Filter>Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GlobalAgenda\Configuration.cpp">
+      <Filter>Engine\GlobalAgenda</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GlobalAgenda\GameDefines.cpp">
+      <Filter>Engine\GlobalAgenda</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GlobalAgenda\PiecesOfCode.cpp">
+      <Filter>Engine\GlobalAgenda</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.hpp">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Template\Configuration.hpp">
-      <Filter>Engine\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Template\GameDefines.hpp">
-      <Filter>Engine\Template</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Template\PiecesOfCode.hpp">
-      <Filter>Engine\Template</Filter>
     </ClInclude>
     <ClInclude Include="dllmain.hpp">
       <Filter>Header Files</Filter>
@@ -78,17 +63,17 @@
     <ClInclude Include="Framework\Member.hpp">
       <Filter>Framework</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Dishonered\Configuration.hpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Dishonered\GameDefines.hpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Dishonered\PiecesOfCode.hpp">
-      <Filter>Engine\Dishonered</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\Printer.hpp">
       <Filter>Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GlobalAgenda\Configuration.hpp">
+      <Filter>Engine\GlobalAgenda</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GlobalAgenda\GameDefines.hpp">
+      <Filter>Engine\GlobalAgenda</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GlobalAgenda\PiecesOfCode.hpp">
+      <Filter>Engine\GlobalAgenda</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

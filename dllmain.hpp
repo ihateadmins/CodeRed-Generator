@@ -194,6 +194,9 @@ namespace Retrievers
 	uintptr_t GetBaseAddress();
 	uintptr_t GetOffset(void* pointer);
 	uintptr_t FindPattern(const uint8_t* pattern, const std::string& mask);
+	
+	MODULEINFO oldGetModuleInfo(LPCTSTR lpModuleName);
+	DWORD oldFindPattern(DWORD dwStart, DWORD dwLen, BYTE* pszPatt, char pszMask[]);
 }
 
 namespace ConstGenerator

@@ -136,26 +136,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Engine\Dishonered\Configuration.cpp" />
-    <ClCompile Include="Engine\Dishonered\GameDefines.cpp" />
-    <ClCompile Include="Engine\Dishonered\PiecesOfCode.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
-    <ClCompile Include="Engine\Template\Configuration.cpp" />
-    <ClCompile Include="Engine\Template\GameDefines.cpp" />
-    <ClCompile Include="Engine\Template\PiecesOfCode.cpp" />
+    <ClCompile Include="Engine\GlobalAgenda\Configuration.cpp" />
+    <ClCompile Include="Engine\GlobalAgenda\GameDefines.cpp" />
+    <ClCompile Include="Engine\GlobalAgenda\PiecesOfCode.cpp" />
     <ClCompile Include="Framework\Member.cpp" />
     <ClCompile Include="Framework\Printer.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dllmain.hpp" />
-    <ClInclude Include="Engine\Dishonered\Configuration.hpp" />
-    <ClInclude Include="Engine\Dishonered\GameDefines.hpp" />
-    <ClInclude Include="Engine\Dishonered\PiecesOfCode.hpp" />
     <ClInclude Include="Engine\Engine.hpp" />
-    <ClInclude Include="Engine\Template\Configuration.hpp" />
-    <ClInclude Include="Engine\Template\GameDefines.hpp" />
-    <ClInclude Include="Engine\Template\PiecesOfCode.hpp" />
+    <ClInclude Include="Engine\GlobalAgenda\Configuration.hpp" />
+    <ClInclude Include="Engine\GlobalAgenda\GameDefines.hpp" />
+    <ClInclude Include="Engine\GlobalAgenda\PiecesOfCode.hpp" />
     <ClInclude Include="Framework\Member.hpp" />
     <ClInclude Include="Framework\Printer.hpp" />
     <ClInclude Include="pch.hpp" />

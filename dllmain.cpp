@@ -1320,6 +1320,41 @@ namespace Retrievers
 
         return NULL;
     }
+
+
+
+    MODULEINFO oldGetModuleInfo(LPCTSTR lpModuleName)
+    {
+        MODULEINFO miInfos = { NULL };
+
+        HMODULE hmModule = GetModuleHandle(lpModuleName);
+
+        if (hmModule)
+        {
+            GetModuleInformation(GetCurrentProcess(), hmModule, &miInfos, sizeof(MODULEINFO));
+        }
+
+        return miInfos;
+    }
+
+    DWORD oldFindPattern(DWORD dwStart, DWORD dwLen, BYTE* pszPatt, char pszMask[])
+    {
+        unsigned int i = NULL;
+        int iLen = strlen(pszMask) - 1;
+
+        for (DWORD dwRet = dwStart; dwRet < dwStart + dwLen; dwRet++)
+        {
+            if (*(BYTE*)dwRet == pszPatt[i] || pszMask[i] == '?')
+            {
+                if (pszMask[i + 1] == '\0')
+                    return(dwRet - iLen);
+                i++;
+            }
+            else
+                i = NULL;
+        }
+        return NULL;
+    }
 }
 
 namespace ConstGenerator
@@ -3545,8 +3580,26 @@ namespace Generator
             }
             else
             {
-                GObjects = reinterpret_cast<TArray<UObject*>*>(Retrievers::FindPattern(GConfig::GetGObjectPattern(), GConfig::GetGObjectMask()));
-                GNames = reinterpret_cast<TArray<FNameEntry*>*>(Retrievers::FindPattern(GConfig::GetGNamePattern(), GConfig::GetGNameMask()));
+                //#define GObjects			0x13465A54
+                //a1 ?? ?? ?? ?? 8b ?? ?? 8b ?? ?? 25 00 02 00 00 IDA Search GObjects
+                #define GObjects_Pattern		"\xa1\x00\x00\x00\x00\x8b\x00\x00\x8b\x00\x00\x25\x00\x02\x00\x00"
+                #define GObjects_Mask			"x????x??x??xxxxx"
+                #define GObjects_Offset			0x1
+                //#define GNames			0x13454180
+                //8b 0d ?? ?? ?? ?? 83 3c 81 00 74 IDA Search GNames
+                #define GNames_Pattern			"\x8b\x0d\x00\x00\x00\x00\x83\x3c\x81\x00\x74"
+                #define GNames_Mask				"xx????xxxxx"
+                #define GNames_Offset			0x2
+                MODULEINFO miGame = Retrievers::oldGetModuleInfo(NULL);
+
+                //uintptr_t gobjaddr = Retrievers::FindPattern(GConfig::GetGObjectPattern(), GConfig::GetGObjectMask()) + GObjects_Offset;
+                //uintptr_t gnamesaddr = Retrievers::FindPattern(GConfig::GetGNamePattern(), GConfig::GetGNameMask()) + GNames_Offset;
+                //GObjects = reinterpret_cast<TArray<UObject*>*>(gobjaddr);
+                //GNames = reinterpret_cast<TArray<FNameEntry*>*>(gnamesaddr);
+
+                GObjects = reinterpret_cast<TArray<UObject*>*>(*(DWORD*)(Retrievers::oldFindPattern((DWORD)miGame.lpBaseOfDll, miGame.SizeOfImage, (BYTE*)GObjects_Pattern, (char*)GObjects_Mask) + GObjects_Offset));
+                GNames = reinterpret_cast<TArray<FNameEntry*>*>(*(DWORD*)(Retrievers::oldFindPattern((DWORD)miGame.lpBaseOfDll, miGame.SizeOfImage, (BYTE*)GNames_Pattern, (char*)GNames_Mask) + GNames_Offset));
+
             }
 
             if (AreGlobalsValid())
